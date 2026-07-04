@@ -88,3 +88,25 @@
 - Create REST API endpoints
 - Connect backend to processed dataset
 - Prepare API for React dashboard
+
+## Day 4 - Backend API Development
+
+### Completed
+- Created FastAPI backend structure
+- Organized backend into routes and services
+- Implemented dataset loader with caching
+- Built analytics service for business logic
+- Developed dashboard API endpoints
+- Implemented overview endpoint for dashboard data
+- Verified API responses locally
+
+### Key Decisions
+- Kept `main.py` minimal and focused on application setup.
+- Separated routing from business logic using a service layer.
+- Cached the dataset to avoid repeated disk reads.
+- Consolidated dashboard KPIs into a single overview endpoint.
+
+### Next
+- Build the React frontend
+- Connect the frontend to the FastAPI backend
+- Display live analytics from the API
