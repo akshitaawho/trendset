@@ -59,3 +59,32 @@
 - Sales trend analysis
 - Category and country analytics
 - Prepare forecasting dataset
+
+## Day 3 - Exploratory Data Analysis
+
+### Completed
+- Created EDA notebook
+- Loaded processed master dataset
+- Explored merged dataset structure
+- Analyzed monthly revenue trends
+- Analyzed revenue by product category
+- Analyzed revenue by country
+- Identified top profitable products
+- Analyzed weekday sales patterns
+- Analyzed payment methods
+- Visualized profit distribution
+- Generated feature correlation matrix
+- Documented business insights
+
+### Key Insights
+- Weekend sales outperform weekdays.
+- Credit Card is the dominant payment method.
+- Female and Masculine categories generate the highest revenue.
+- Revenue peaks toward the end of the year.
+- Dataset is ready for forecasting and dashboard development.
+
+### Next
+- Build FastAPI backend
+- Create REST API endpoints
+- Connect backend to processed dataset
+- Prepare API for React dashboard
