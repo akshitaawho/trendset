@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routes.dashboard import router as dashboard_router
+from app.routes.dashboard_routes import router as dashboard_router
 
 app = FastAPI(
     title="TrendSet API",
