@@ -2,6 +2,7 @@ import Header from "../layout/Header";
 import KPISection from "../cards/KPISection";
 import RevenueChart from "../charts/RevenueChart";
 import CategoryChart from "../charts/CategoryChart";
+import CountryChart from "../charts/CountryChart";
 
 type DashboardProps = {
   data: {
@@ -14,6 +15,7 @@ type DashboardProps = {
     };
     monthly_sales: Record<string, number>;
     category_sales: Record<string, number>;
+    country_sales: Record<string, number>;
   };
 };
 
@@ -30,6 +32,7 @@ export default function Dashboard({ data }: DashboardProps) {
 
         <div className="grid gap-8 lg:grid-cols-2">
             <CategoryChart data={data.category_sales} />
+            <CountryChart data={data.country_sales} />
         </div>
 
       </div>
