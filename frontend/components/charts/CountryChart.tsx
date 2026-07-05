@@ -1,12 +1,12 @@
 "use client";
 
 import {
+  ResponsiveContainer,
   BarChart,
   Bar,
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
 
@@ -30,10 +30,36 @@ export default function CountryChart({ data }: Props) {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>
             <CartesianGrid stroke="#333" strokeDasharray="3 3" />
-            <XAxis dataKey="country" stroke="#aaa" />
-            <YAxis stroke="#aaa" />
-            <Tooltip />
-            <Bar dataKey="sales" fill="#10b981" radius={[6, 6, 0, 0]} />
+
+            <XAxis
+              dataKey="country"
+              angle={-25}
+              textAnchor="end"
+              interval={0}
+              height={60}
+              tick={{ fill: "#aaa", fontSize: 12 }}
+            />
+
+            <YAxis
+              tick={{ fill: "#aaa" }}
+              tickFormatter={(value) =>
+                `${(Number(value) / 1_000_000).toFixed(0)}M`
+              }
+            />
+
+            <Tooltip
+              formatter={(value) => [
+                `$${(Number(value) / 1_000_000).toFixed(2)}M`,
+                "Revenue",
+              ]}
+            />
+
+            <Bar
+              dataKey="sales"
+              fill="#10b981"
+              radius={[6, 6, 0, 0]}
+              animationDuration={800}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>

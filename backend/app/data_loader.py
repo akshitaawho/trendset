@@ -18,6 +18,6 @@ def load_dataset():
     global _master_df
 
     if _master_df is None:
-        _master_df = pd.read_csv(DATA_PATH)
+        _master_df = pd.read_csv(DATA_PATH, low_memory=False)
 
     return _master_df

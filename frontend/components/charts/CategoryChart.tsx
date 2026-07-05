@@ -30,21 +30,28 @@ export default function CategoryChart({ data }: Props) {
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={chartData}
-              dataKey="value"
-              nameKey="name"
-              outerRadius={100}
-              label
-            >
-              {chartData.map((_, index) => (
-                <Cell
-                  key={index}
-                  fill={COLORS[index % COLORS.length]}
-                />
-              ))}
+                data={chartData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={100}
+                label={({ name, percent }) =>
+                    `${name} (${((percent ?? 0) * 100).toFixed(0)}%)`
+                }
+                >
+                {chartData.map((_, index) => (
+                    <Cell
+                    key={index}
+                    fill={COLORS[index % COLORS.length]}
+                    />
+                ))}
             </Pie>
 
-            <Tooltip />
+            <Tooltip
+                formatter={(value) => [
+                    `$${(Number(value) / 1_000_000).toFixed(2)}M`,
+                    "Revenue",
+                ]}
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>

@@ -4,72 +4,61 @@ import { useEffect, useState } from "react";
 
 import { getDashboardData } from "../../app/lib/api";
 
-import { getForecast } from "@/app/lib/api";
-import ForecastChart from "../charts/ForecastChart";
 import Header from "../layout/Header";
 import Filters from "../layout/Filters";
 import KPISection from "../cards/KPISection";
 import RevenueChart from "../charts/RevenueChart";
+import ForecastSection from "../charts/ForecastSection";
 import CategoryChart from "../charts/CategoryChart";
 import CountryChart from "../charts/CountryChart";
 import TopProductsTable from "../charts/TopProductsTable";
 import LoadingSkeleton from "../layout/LoadingSkeleton";
+import type { DashboardData } from "@/types/dashboard";
 
 export default function Dashboard() {
-    const [forecast, setForecast] = useState([]);
-    const [forecastDays, setForecastDays] = useState(30);
+  const [data, setData] = useState<DashboardData | null>(null);
 
-    useEffect(() => {
-    async function loadForecast() {
-        const result = await getForecast(forecastDays);
-        setForecast(result.forecast);
+  const [country, setCountry] = useState("");
+  const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    async function loadDashboard() {
+      const dashboard = await getDashboardData(country, category);
+      setData(dashboard);
     }
 
-    loadForecast();
-    }, [forecastDays]);
+    loadDashboard();
+  }, [country, category]);
 
-    const [data, setData] = useState<any>(null);
+  if (!data) {
+    return <LoadingSkeleton />;
+  }
 
-    const [country, setCountry] = useState("");
-    const [category, setCategory] = useState("");
+  return (
+    <main className="min-h-screen bg-black p-8">
+      <div className="mx-auto max-w-7xl space-y-8">
 
-    useEffect(() => {
-        async function loadDashboard() {
-        const dashboard = await getDashboardData(country, category);
-        setData(dashboard);
-        }
+        <Header />
 
-        loadDashboard();
-    }, [country, category]);
+        <Filters
+          onCountryChange={setCountry}
+          onCategoryChange={setCategory}
+        />
 
-    if (!data) {
-        return <LoadingSkeleton />;
-    }
+        <KPISection kpis={data.kpis} />
 
-    return (
-        <main className="min-h-screen bg-black p-8">
-        <div className="mx-auto max-w-7xl space-y-8">
+        <RevenueChart data={data.monthly_sales} />
 
-            <Header />
+        <ForecastSection />
 
-            <Filters
-            onCountryChange={setCountry}
-            onCategoryChange={setCategory}
-            />
-
-            <KPISection kpis={data.kpis} />
-
-            <RevenueChart data={data.monthly_sales} />
-            <ForecastChart data={forecast} />
-
-            <div className="grid gap-8 lg:grid-cols-2">
-            <CategoryChart data={data.category_sales} />
-            <CountryChart data={data.country_sales} />
-            </div>
-
-            <TopProductsTable data={data.top_products} />
-
+        <div className="grid gap-8 lg:grid-cols-2">
+          <CategoryChart data={data.category_sales} />
+          <CountryChart data={data.country_sales} />
         </div>
-        </main>
-    );
+
+        <TopProductsTable data={data.top_products} />
+
+      </div>
+    </main>
+  );
 }

@@ -31,8 +31,16 @@ export default function RevenueChart({ data }: Props) {
           <LineChart data={chartData}>
             <CartesianGrid stroke="#333" strokeDasharray="3 3" />
             <XAxis dataKey="month" stroke="#aaa" />
-            <YAxis stroke="#aaa" />
-            <Tooltip />
+            <YAxis
+                tick={{ fill: "#aaa" }}
+                tickFormatter={(value) => `${(Number(value) / 1_000_000).toFixed(0)}M`}
+            />
+            <Tooltip
+                formatter={(value) => [
+                    `$${(Number(value) / 1_000_000).toFixed(2)}M`,
+                    "Revenue",
+                ]}
+            />
             <Line
               type="monotone"
               dataKey="revenue"

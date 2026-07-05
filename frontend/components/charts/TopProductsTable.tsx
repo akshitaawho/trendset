@@ -2,9 +2,19 @@ type Props = {
   data: Record<string, number>;
 };
 
-export default function TopProductsTable({ data }: Props) {
-  const products = Object.entries(data);
+function formatProfit(value: number) {
+  if (value >= 1_000_000) {
+    return `$${(value / 1_000_000).toFixed(1)}M`;
+  }
 
+  if (value >= 1_000) {
+    return `$${(value / 1_000).toFixed(1)}K`;
+  }
+
+  return `$${value.toFixed(2)}`;
+}
+
+export default function TopProductsTable({ data }: Props) {
   return (
     <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
       <h2 className="mb-6 text-xl font-semibold text-white">
@@ -23,14 +33,14 @@ export default function TopProductsTable({ data }: Props) {
           {Object.entries(data).map(([id, profit]) => (
             <tr
               key={id}
-              className="border-b border-gray-800 hover:bg-gray-800/50"
+              className="border-b border-zinc-800 transition-colors hover:bg-zinc-800/50"
             >
               <td className="py-3 text-gray-200">
-                {id}
+                #{id}
               </td>
 
-              <td className="py-3 text-right text-gray-200">
-                {Number(profit).toLocaleString()}
+              <td className="py-3 text-right font-medium text-gray-200">
+                {formatProfit(profit)}
               </td>
             </tr>
           ))}
