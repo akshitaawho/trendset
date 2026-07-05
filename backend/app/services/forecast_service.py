@@ -3,9 +3,16 @@ from prophet import Prophet
 
 from app.data_loader import load_dataset
 
+model = None
+last_date = None
+
 
 def get_forecast(days: int = 30):
+    global model
+
     df = load_dataset().copy()
+
+    df["Date"] = pd.to_datetime(df["Date"])
 
     daily_sales = (
         df.groupby("Date")["Invoice Total"]
@@ -15,10 +22,12 @@ def get_forecast(days: int = 30):
 
     daily_sales.columns = ["ds", "y"]
 
-    model = Prophet()
-    model.fit(daily_sales)
+    if model is None:
+        model = Prophet()
+        model.fit(daily_sales)
 
     future = model.make_future_dataframe(periods=days)
+
     forecast = model.predict(future)
 
     result = forecast[["ds", "yhat"]].tail(days)

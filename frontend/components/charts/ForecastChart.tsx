@@ -28,26 +28,28 @@ export default function ForecastChart({ data }: Props) {
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
 
-          <XAxis
-            dataKey="date"
-            tick={{ fill: "#aaa", fontSize: 12 }}
-          />
+                <XAxis
+                    dataKey="date"
+                    interval={4}
+                    tick={{ fill: "#aaa", fontSize: 12 }}
+                />
 
-          <YAxis
-            tick={{ fill: "#aaa" }}
-          />
+                <YAxis
+                    tick={{ fill: "#aaa" }}
+                    tickFormatter={(value) => `${(value / 1000).toFixed(1)}K`}
+                />
 
-          <Tooltip />
+                <Tooltip/>
 
-          <Line
-            type="monotone"
-            dataKey="predicted_revenue"
-            stroke="#60a5fa"
-            strokeWidth={3}
-            dot={false}
-          />
+                <Line
+                    type="monotone"
+                    dataKey="predicted_revenue"
+                    stroke="#60a5fa"
+                    strokeWidth={3}
+                    dot={false}
+            />
         </LineChart>
       </ResponsiveContainer>
     </div>

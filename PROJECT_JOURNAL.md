@@ -110,3 +110,31 @@
 - Build the React frontend
 - Connect the frontend to the FastAPI backend
 - Display live analytics from the API
+
+## Day 5 - Interactive Dashboard & Forecasting
+
+### Completed
+- Added country and category filters to the dashboard
+- Updated backend to support filtered analytics
+- Created filters API endpoint
+- Connected frontend filters to backend
+- Enabled dynamic dashboard updates without page refresh
+- Built demand forecasting notebook using Prophet
+- Prepared daily revenue time series
+- Trained 30-day forecasting model
+- Created forecasting API endpoint
+- Integrated forecast chart into the dashboard
+- Added loading skeleton for improved user experience
+
+### Key Decisions
+- Used Prophet for time-series forecasting due to strong seasonality in sales data.
+- Aggregated transaction data into daily revenue before forecasting.
+- Kept forecasting as a separate backend service.
+- Implemented client-side data fetching for interactive filtering.
+
+### Next
+- Improve forecast performance
+- Add forecast period selector (7 / 30 / 90 days)
+- Polish dashboard UI
+- Deploy frontend and backend
+- Write project documentation

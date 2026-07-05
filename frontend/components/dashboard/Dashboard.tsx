@@ -13,18 +13,20 @@ import RevenueChart from "../charts/RevenueChart";
 import CategoryChart from "../charts/CategoryChart";
 import CountryChart from "../charts/CountryChart";
 import TopProductsTable from "../charts/TopProductsTable";
+import LoadingSkeleton from "../layout/LoadingSkeleton";
 
 export default function Dashboard() {
     const [forecast, setForecast] = useState([]);
+    const [forecastDays, setForecastDays] = useState(30);
 
     useEffect(() => {
     async function loadForecast() {
-        const result = await getForecast();
+        const result = await getForecast(forecastDays);
         setForecast(result.forecast);
     }
 
     loadForecast();
-    }, []);
+    }, [forecastDays]);
 
     const [data, setData] = useState<any>(null);
 
@@ -41,7 +43,7 @@ export default function Dashboard() {
     }, [country, category]);
 
     if (!data) {
-        return <p className="p-8 text-white">Loading...</p>;
+        return <LoadingSkeleton />;
     }
 
     return (
