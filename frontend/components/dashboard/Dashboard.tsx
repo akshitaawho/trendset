@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getDashboardData } from "../../app/lib/api";
 
 import Header from "../layout/Header";
+import Filters from "../layout/Filters";
 import KPISection from "../cards/KPISection";
 import RevenueChart from "../charts/RevenueChart";
 import CategoryChart from "../charts/CategoryChart";
@@ -14,14 +15,17 @@ import TopProductsTable from "../charts/TopProductsTable";
 export default function Dashboard() {
   const [data, setData] = useState<any>(null);
 
+  const [country, setCountry] = useState("");
+  const [category, setCategory] = useState("");
+
   useEffect(() => {
-    async function load() {
-      const dashboard = await getDashboardData();
+    async function loadDashboard() {
+      const dashboard = await getDashboardData(country, category);
       setData(dashboard);
     }
 
-    load();
-  }, []);
+    loadDashboard();
+  }, [country, category]);
 
   if (!data) {
     return <p className="p-8 text-white">Loading...</p>;
@@ -32,6 +36,11 @@ export default function Dashboard() {
       <div className="mx-auto max-w-7xl space-y-8">
 
         <Header />
+
+        <Filters
+          onCountryChange={setCountry}
+          onCategoryChange={setCategory}
+        />
 
         <KPISection kpis={data.kpis} />
 
