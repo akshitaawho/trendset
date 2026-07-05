@@ -56,9 +56,16 @@ def get_top_products_by_profit():
 
     return top_products.to_dict()
 
-def get_dashboard_overview():
+def get_dashboard_overview(country=None, category=None):
 
-    df = load_dataset()
+    df = load_dataset().copy()
+
+    if country:
+        df = df[df["Country"] == country]
+
+    if category:
+        df = df[df["Category"] == category]
+
     return {
         "kpis": {
             "revenue": round(df["Line Total"].sum(), 2),
@@ -68,11 +75,44 @@ def get_dashboard_overview():
             "countries": df["Country"].nunique(),
         },
 
-        "monthly_sales": get_monthly_sales(),
+        "monthly_sales": (
+            df.groupby("Month Name")["Line Total"]
+            .sum()
+            .reindex([
+                "January","February","March","April","May","June",
+                "July","August","September","October","November","December"
+            ])
+            .fillna(0)
+            .to_dict()
+        ),
 
-        "category_sales": get_category_sales(),
+        "category_sales": (
+            df.groupby("Category")["Line Total"]
+            .sum()
+            .sort_values(ascending=False)
+            .to_dict()
+        ),
 
-        "country_sales": get_country_sales(),
+        "country_sales": (
+            df.groupby("Country")["Line Total"]
+            .sum()
+            .sort_values(ascending=False)
+            .to_dict()
+        ),
 
-        "top_products": get_top_products_by_profit()
+        "top_products": (
+            df.groupby("Product ID")["Profit"]
+            .sum()
+            .sort_values(ascending=False)
+            .head(10)
+            .to_dict()
+        ),
+    }
+
+def get_filters():
+    df = load_dataset()
+
+    return {
+        "countries": sorted(df["Country"].dropna().unique().tolist()),
+        "categories": sorted(df["Category"].dropna().unique().tolist()),
     }

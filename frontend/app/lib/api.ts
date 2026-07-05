@@ -9,3 +9,11 @@ export async function getDashboardData() {
 
   return res.json();
 }
+
+export async function getFilters() {
+  const response = await fetch("http://127.0.0.1:8000/dashboard/filters", {
+    cache: "no-store",
+  });
+
+  return response.json();
+}

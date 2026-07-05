@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-
+from fastapi import APIRouter, Query
 from app.services import analytics_service
 
 router = APIRouter(
@@ -33,5 +32,15 @@ def top_products():
     return analytics_service.get_top_products_by_profit()
 
 @router.get("/overview")
-def overview():
-    return analytics_service.get_dashboard_overview()
+def overview(
+    country: str | None = Query(default=None),
+    category: str | None = Query(default=None),
+):
+    return analytics_service.get_dashboard_overview(
+        country=country,
+        category=category,
+    )
+
+@router.get("/filters")
+def filters():
+    return analytics_service.get_filters()
