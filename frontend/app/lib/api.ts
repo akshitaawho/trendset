@@ -39,3 +39,14 @@ export async function getFilters() {
 
   return res.json();
 }
+
+export async function getForecast(days = 30) {
+  const res = await fetch(
+    `${API_URL}/dashboard/forecast?days=${days}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  return res.json();
+}

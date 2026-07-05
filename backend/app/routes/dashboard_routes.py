@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Query
 from app.services import analytics_service
+from app.services import forecast_service
 
 router = APIRouter(
     prefix="/dashboard",
@@ -44,3 +45,7 @@ def overview(
 @router.get("/filters")
 def filters():
     return analytics_service.get_filters()
+
+@router.get("/forecast")
+def forecast(days: int = 30):
+    return forecast_service.get_forecast(days)
