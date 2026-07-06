@@ -9,9 +9,11 @@ __pycache__/
 .vscode/
 
 # Data
-data/raw/
-data/processed/
-data/outputs/
+data/
+processed/
+raw/
+datam/
 
 # Environment
 .env
+.env.local
